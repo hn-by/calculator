@@ -63,16 +63,17 @@ function handleClickEqual(e) {
         
     let displayDiv = document.createElement('div');
     displayDiv.classList.add(`display-key`);
-    displayDiv.textContent = ' ' + '=' + ' ' + (result || ' ') + ' ';
+    display.innerHTML = ' ';
+    displayDiv.textContent = (result || ' ');
     displayDiv.style.color = "white";
     display.appendChild(displayDiv);   
     
     eqKey.removeEventListener('click', handleClickEqual);
     keys.forEach(key => {
 
-        key.removeEventListener('click', handleClickNumKey)
+         key.removeEventListener('click', handleClickNumKey)
     
-    })
+     })
     opKeys.forEach(key => {
 
         key.removeEventListener('click', handleClickOpKey)
