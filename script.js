@@ -4,30 +4,95 @@ let cancelKey = document.querySelector('.cancel-key');
 let opKeys = document.querySelectorAll('.op');
 let eqKey = document.querySelector('.eq-key');
 
+
+eqKey.addEventListener('click', handleClickEqual)
+
 keys.forEach(key => {
 
-    key.addEventListener('click', e => {
-
-        let displayDiv = document.createElement('div');
-        displayDiv.classList.add(`display-key`);
-        displayDiv.textContent = key.textContent;
-        displayDiv.style.color = "blue";
-        display.appendChild(displayDiv);
-
-    })
+    key.addEventListener('click', handleClickNumKey)
 
 })
 
-cancelKey.addEventListener('click', e => {
+cancelKey.addEventListener('click', handleClickCancelKey)
 
+opKeys.forEach(key => {
+
+    key.addEventListener('click', handleClickOpKey)
+
+})
+
+
+function handleClickCancelKey(e) {
+    
     console.log(display.textContent.split(' '));
     display.innerHTML = '';
 
-    function handleClick(e) {
+    eqKey.addEventListener('click', handleClickEqual);
+    keys.forEach(key => {
+
+        key.addEventListener('click', handleClickNumKey)
+    
+    })
+    opKeys.forEach(key => {
+
+        key.addEventListener('click', handleClickOpKey)
+    
+    })
+
+}
+
+function handleClickOpKey(e) {
+    
+    let displayDiv = document.createElement('div');
+    displayDiv.classList.add(`display-key`);
+    displayDiv.textContent = ' ' + e.target.textContent + ' ';
+    displayDiv.style.color = "white";
+    display.appendChild(displayDiv);
+
+}
+
+function handleClickEqual(e) {
  
-        let dArr = display.textContent.split(' ');
-        let result;
-            
+    let result = handleNum()
+        
+    let displayDiv = document.createElement('div');
+    displayDiv.classList.add(`display-key`);
+    displayDiv.textContent = ' ' + '=' + ' ' + (result || ' ') + ' ';
+    displayDiv.style.color = "white";
+    display.appendChild(displayDiv);   
+    
+    eqKey.removeEventListener('click', handleClickEqual);
+    keys.forEach(key => {
+
+        key.removeEventListener('click', handleClickNumKey)
+    
+    })
+    opKeys.forEach(key => {
+
+        key.removeEventListener('click', handleClickOpKey)
+    
+    })
+      
+}
+
+function handleClickNumKey(e) {
+
+    let displayDiv = document.createElement('div');
+    displayDiv.classList.add(`display-key`);
+    displayDiv.textContent = e.target.textContent;
+    displayDiv.style.color = "white";
+    display.appendChild(displayDiv);
+
+}
+
+
+function handleNum() {
+    
+    let dArr = display.textContent.split(' ');
+    let result;
+    
+    while(dArr[2]) {
+
         switch (dArr[1]) {
             case '+':
                 result = parseInt(dArr[0]) + parseInt(dArr[2]); 
@@ -45,37 +110,15 @@ cancelKey.addEventListener('click', e => {
         }
             
         dArr.splice(0, 3, result);
-        console.log(dArr)
-            
-        let displayDiv = document.createElement('div');
-        displayDiv.classList.add(`display-key`);
-        displayDiv.textContent = ' ' + '=' + ' ' + result + ' ';
-        displayDiv.style.color = "blue";
-        display.appendChild(displayDiv);   
-        
-        eqKey.removeEventListener('click', handleClick)
-        
+
     }
+        
+    
+    console.log(dArr)
 
-    eqKey.addEventListener('click', handleClick)
+    return result;
 
-
-
-})
-
-opKeys.forEach(key => {
-
-    key.addEventListener('click', e => {
-
-        let displayDiv = document.createElement('div');
-        displayDiv.classList.add(`display-key`);
-        displayDiv.textContent = ' ' + key.textContent + ' ';
-        displayDiv.style.color = "blue";
-        display.appendChild(displayDiv);
-
-    })
-
-})
+}
 
 function add(x, y) {
     return x + y;
@@ -92,5 +135,3 @@ function multiply(x, y) {
 function divide(x, y) {
     return x / y;
 }
-
-
