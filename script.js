@@ -49,6 +49,12 @@ function handleClickOpKey(e) {
     displayDiv.style.color = "white";
     display.appendChild(displayDiv);
 
+    opKeys.forEach(key => {
+
+        key.removeEventListener('click', handleClickOpKey)
+    
+    })
+
 }
 
 function handleClickEqual(e) {
@@ -82,6 +88,12 @@ function handleClickNumKey(e) {
     displayDiv.textContent = e.target.textContent;
     displayDiv.style.color = "white";
     display.appendChild(displayDiv);
+
+    opKeys.forEach(key => {
+
+        key.addEventListener('click', handleClickOpKey)
+    
+    })
 
 }
 
